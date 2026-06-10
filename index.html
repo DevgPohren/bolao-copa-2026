@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bolão da Copa 2026 - Steps Reabilitação & Performance</title>
+<style>
+:root{--verde:#1B5E20;--verde-m:#2E7D32;--verde-c:#E8F5E9;--azul:#0D47A1;--azul-m:#1565C0;--azul-c:#E3F2FD;--amarelo:#F57F17;--amarelo-c:#FFFDE7;--vermelho:#B71C1C;--borda:#E0E0E0;--cinza:#757575;--cinza-c:#F5F5F5;--texto:#212121}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#F0F4F8;color:var(--texto);min-height:100vh}
+.header{background:linear-gradient(135deg,#1B5E20 0%,#0D47A1 100%);color:white;padding:14px 24px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;max-width:900px;margin:0 auto}
+.logo-text{font-size:20px;font-weight:700}
+.logo-sub{font-size:12px;opacity:.8}
+.btn-header{background:rgba(255,255,255,.2);color:white;border:none;padding:8px 16px;border-radius:20px;cursor:pointer;font-size:13px;font-weight:600}
+.btn-header:hover{background:rgba(255,255,255,.35)}
+.pagina{display:none;max-width:900px;margin:0 auto;padding:24px 16px}
+.pagina.ativa{display:block}
+.card{background:white;border-radius:16px;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,.08);margin-bottom:20px}
+.card-titulo{font-size:18px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.tela-bv{text-align:center;padding:40px 20px}
+.bv-titulo{font-size:32px;font-weight:800;color:var(--verde);margin-bottom:8px}
+.bv-sub{font-size:16px;color:var(--cinza);margin-bottom:40px}
+.bv-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:600px;margin:0 auto}
+.bv-card{background:white;border-radius:16px;padding:32px 24px;box-shadow:0 4px 16px rgba(0,0,0,.1);cursor:pointer;border:3px solid transparent;transition:all .2s}
+.bv-card:hover{border-color:var(--verde);transform:translateY(-2px)}
+.bv-card .icon{font-size:48px;margin-bottom:12px}
+.bv-card .label{font-size:17px;font-weight:700;margin-bottom:6px}
+.bv-card .desc{font-size:13px;color:var(--cinza)}
+.form-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.form-group label{font-size:15px;font-weight:600;color:var(--texto)}
+.dica{font-size:13px;color:var(--cinza)}
+input[type=text],input[type=password],input[type=number]{padding:14px 16px;border:2px solid var(--borda);border-radius:10px;font-size:16px;transition:border .2s;background:white;color:var(--texto);width:100%}
+input:focus{outline:none;border-color:var(--azul-m)}
+input.gol{width:80px;text-align:center;font-size:24px;font-weight:800;padding:10px 0;-moz-appearance:textfield}
+input.pen{width:64px;text-align:center;font-size:18px;padding:8px 0;-moz-appearance:textfield}
+input.gol::-webkit-inner-spin-button,input.gol::-webkit-outer-spin-button,input.pen::-webkit-inner-spin-button,input.pen::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+input.gol,input.pen{-moz-appearance:textfield;appearance:textfield}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:10px;border:none;cursor:pointer;font-size:16px;font-weight:700;transition:all .2s}
+.btn-verde{background:var(--verde);color:white}
+.btn-verde:hover{background:var(--verde-m)}
+.btn-azul{background:var(--azul);color:white}
+.btn-azul:hover{background:var(--azul-m)}
+.btn-outline{background:white;color:var(--verde);border:2px solid var(--verde)}
+.btn-outline:hover{background:var(--verde-c)}
+.btn-sm{padding:8px 16px;font-size:13px}
+.btn-vermelho{background:var(--vermelho);color:white}
+.btn-bloco{display:block;width:100%;text-align:center}
+.jogo-card{border:2px solid var(--borda);border-radius:14px;padding:18px;margin-bottom:14px;transition:border-color .2s}
+.jogo-card.ok{border-color:#A5D6A7;background:#F9FFF9}
+.jogo-card.incompleto{border-color:#FFB74D;background:#FFF8E1}
+.jogo-card.bloqueado{border-color:#E0E0E0;background:#FAFAFA;opacity:0.7;pointer-events:none}
+.jogo-topo{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.jogo-num{font-size:13px;font-weight:700;color:var(--cinza)}
+.placar-row{display:flex;align-items:center;justify-content:center;gap:16px}
+.pais{font-size:15px;font-weight:700;flex:1}
+.pais.dir{text-align:right}
+.vs{font-size:22px;font-weight:800;color:var(--cinza)}
+.pen-row{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--cinza);justify-content:center}
+.fase-hdr{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;margin-bottom:14px;font-size:15px;font-weight:700}
+.f-grupos{background:var(--verde-c);color:var(--verde)}
+.f-r32{background:#E3F2FD;color:#0D47A1}
+.f-oitavas{background:#FFF8E1;color:#E65100}
+.f-quartas{background:#FCE4EC;color:#880E4F}
+.f-semi{background:#F3E5F5;color:#6A1B9A}
+.f-terceiro{background:#EFEBE9;color:#4E342E}
+.f-final{background:#FFF3E0;color:#BF360C}
+.prog-bar{height:12px;background:var(--borda);border-radius:6px;overflow:hidden;margin:10px 0}
+.prog-fill{height:100%;background:var(--verde);border-radius:6px;transition:width .4s}
+.rank-item{display:flex;align-items:center;gap:14px;padding:16px;border-radius:12px;margin-bottom:10px;border:2px solid var(--borda);background:white}
+.rank-pos{font-size:26px;font-weight:900;min-width:50px;text-align:center}
+.rank-pts{font-size:24px;font-weight:800;color:var(--verde)}
+.alerta{padding:14px 18px;border-radius:10px;margin-bottom:16px;font-size:15px;line-height:1.5}
+.alerta-verde{background:var(--verde-c);color:var(--verde);border:1px solid #A5D6A7}
+.alerta-verm{background:#FFEBEE;color:var(--vermelho);border:1px solid #FFCDD2}
+.alerta-amar{background:var(--amarelo-c);color:#E65100;border:1px solid #FFE082}
+.alerta-azul{background:var(--azul-c);color:var(--azul);border:1px solid #90CAF9}
+.tabela{width:100%;border-collapse:collapse;font-size:14px}
+.tabela th{background:var(--azul);color:white;padding:10px 12px;text-align:left;font-size:12px;font-weight:700;text-transform:uppercase}
+.tabela td{padding:10px 12px;border-bottom:1px solid var(--borda)}
+.tabela tr:hover td{background:var(--cinza-c)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:24px}
+.stat{background:white;border-radius:12px;padding:18px;text-align:center;border:2px solid var(--borda)}
+.stat-val{font-size:32px;font-weight:800;color:var(--azul)}
+.stat-lab{font-size:12px;color:var(--cinza);margin-top:4px}
+.tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.tab{padding:10px 18px;border-radius:8px;border:2px solid var(--borda);cursor:pointer;font-size:14px;font-weight:600;background:white;color:var(--cinza);transition:all .2s}
+.tab.ativa{background:var(--azul);color:white;border-color:var(--azul)}
+.spinner{width:48px;height:48px;border:5px solid var(--borda);border-top-color:var(--verde);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:999}
+.modal-bg.aberto{display:flex}
+.modal{background:white;border-radius:16px;padding:28px;max-width:480px;width:90%;max-height:80vh;overflow-y:auto}
+.sep{height:1px;background:var(--borda);margin:20px 0}
+.txt-c{text-align:center}
+.txt-cinza{color:var(--cinza);font-size:14px}
+.mt12{margin-top:12px}
+.mt20{margin-top:20px}
+.flex{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.hidden{display:none!important}
+@media(max-width:560px){.bv-grid{grid-template-columns:1fr}.bv-titulo{font-size:24px}.pais{font-size:13px}input.gol{width:64px;font-size:20px}}
+</style>
+</head>
+<body>
+<style>
+body::before {
+  content: '';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  background-image: url('logo_steps.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+}
+.pagina, .header { position: relative; z-index: 1; }
+</style>
+<div class="header">
+  <div class="header-inner">
+    <div style="display:flex;align-items:center;gap:14px">
+      <div>
+        <div class="logo-text">Bolão da Copa 2026 - Steps — Reabilitação & Performance</div>
+        <div class="logo-sub" id="hdr-sub">Bem-vindo!</div>
+      </div>
+    </div>
+    <button class="btn-header hidden" id="btn-sair" onclick="sair()">← Sair</button>
+  </div>
+</div>
+
+<!-- INÍCIO -->
+<div class="pagina ativa" id="pg-inicio">
+  <div class="tela-bv">
+    <div class="bv-titulo">Bolão da Copa 2026</div>
+    <div class="bv-sub" style="margin-bottom:6px">Steps — Reabilitação & Performance</div>
+    <div class="bv-sub">Como você quer entrar?</div>
+    <div class="bv-grid">
+      <div class="bv-card" onclick="ir('pg-codigo')">
+        <div class="icon">🙋</div>
+        <div class="label">Sou Participante</div>
+        <div class="desc">Tenho meu código e quero preencher meus palpites</div>
+      </div>
+      <div class="bv-card" onclick="ir('pg-gestor-login')">
+        <div class="icon">🔐</div>
+        <div class="label">Sou o Gestor</div>
+        <div class="desc">Quero gerenciar o bolão e ver os resultados</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CÓDIGO -->
+<div class="pagina" id="pg-codigo">
+  <div class="card" style="max-width:480px;margin:40px auto">
+    <div class="card-titulo">🙋 Entrar com meu código</div>
+    <div class="alerta alerta-azul">📱 O gestor enviou seu código pelo WhatsApp. Digite exatamente como recebeu.</div>
+    <div class="form-group">
+      <label>Seu Código de Acesso</label>
+      <div class="dica">Ex: MARIA-4821</div>
+      <input type="text" id="inp-cod" placeholder="SEU-CÓDIGO" style="text-transform:uppercase;font-size:22px;font-weight:800;letter-spacing:3px;text-align:center" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')entrarCodigo()">
+    </div>
+    <div id="err-cod" class="alerta alerta-verm hidden"></div>
+    <div id="load-cod" class="hidden txt-c" style="padding:16px"><div class="spinner"></div><div class="txt-cinza mt12">Verificando...</div></div>
+    <button class="btn btn-verde btn-bloco" onclick="entrarCodigo()">Entrar →</button>
+    <div class="sep"></div>
+    <div class="txt-c txt-cinza">Não tem código? Peça ao gestor do bolão.</div>
+    <div class="mt12 txt-c"><button class="btn btn-outline btn-sm" onclick="ir('pg-inicio')">← Voltar</button></div>
+  </div>
+</div>
+
+<!-- PALPITES -->
+<div class="pagina" id="pg-palpites">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+      <div>
+        <div style="font-size:20px;font-weight:800" id="palp-nome">—</div>
+        <div class="txt-cinza" id="palp-cod-label"></div>
+      </div>
+      <button class="btn btn-verde btn-sm" onclick="salvarPalpites()">💾 Salvar Progresso</button>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <div class="txt-cinza" id="prog-txt">0 de 104 jogos preenchidos</div>
+  </div>
+  <div id="alerta-incompleto" class="alerta alerta-amar hidden"></div>
+  <div id="alerta-salvo" class="alerta alerta-verde hidden">✅ Palpites salvos! Você pode fechar e voltar quando quiser — seus dados ficam na nuvem.</div>
+  <div id="alerta-err-salvo" class="alerta alerta-verm hidden">❌ Erro ao salvar. Verifique sua internet.</div>
+  <div id="fases-container"></div>
+  <div class="card txt-c">
+    <button class="btn btn-verde" style="font-size:18px;padding:16px 40px" onclick="salvarPalpites()">💾 Salvar meus palpites</button>
+    <div class="txt-cinza mt12">Pode salvar várias vezes. Seus dados ficam seguros.</div>
+  </div>
+</div>
+
+<!-- GESTOR LOGIN -->
+<div class="pagina" id="pg-gestor-login">
+  <div class="card" style="max-width:420px;margin:40px auto">
+    <div class="card-titulo">🔐 Área do Gestor</div>
+    <div class="form-group">
+      <label>E-mail</label>
+      <input type="email" id="inp-email" placeholder="seu@email.com" onkeydown="if(event.key==='Enter')entrarGestor()">
+    </div>
+    <div class="form-group">
+      <label>Senha</label>
+      <input type="password" id="inp-senha" placeholder="Digite sua senha" onkeydown="if(event.key==='Enter')entrarGestor()">
+    </div>
+    <div id="err-senha" class="alerta alerta-verm hidden">❌ E-mail ou senha incorretos</div>
+    <div id="load-gestor" class="hidden txt-c" style="padding:12px"><div class="spinner" style="width:32px;height:32px;margin:0 auto"></div></div>
+    <button class="btn btn-azul btn-bloco" onclick="entrarGestor()">Entrar</button>
+    <div class="sep"></div>
+    <div class="mt12 txt-c"><button class="btn btn-outline btn-sm" onclick="ir('pg-inicio')">← Voltar</button></div>
+  </div>
+</div>
+
+<!-- GESTOR PAINEL -->
+<div class="pagina" id="pg-gestor">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+      <div><div style="font-size:20px;font-weight:800">🎯 Painel do Gestor</div><div class="txt-cinza">Bolão da Copa 2026</div></div>
+      <button class="btn btn-vermelho btn-sm" onclick="sair()">Sair</button>
+    </div>
+  </div>
+  <div class="stats-grid" id="stats"></div>
+  <div class="tabs">
+    <div class="tab ativa" onclick="abrirTab('tab-part')">👥 Participantes</div>
+    <div class="tab" onclick="abrirTab('tab-res')">📋 Resultados</div>
+    <div class="tab" onclick="abrirTab('tab-rank')">🏆 Ranking</div>
+    <div class="tab" id="tab-btn-admin" style="display:none" onclick="abrirTab('tab-admin')">🛡️ Super Admin</div>
+  </div>
+
+  <div id="auto-result-bar" class="hidden" style="background:#E8F5E9;border:1px solid #A5D6A7;border-radius:12px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <span style="font-size:14px;font-weight:700;color:#1B5E20">⚡ Resultados Automáticos</span>
+    <span style="font-size:13px;color:#2E7D32" id="auto-status">Pronto para buscar</span>
+    <button class="btn btn-verde btn-sm" onclick="buscarResultadosAPI()" id="btn-buscar">🔄 Buscar Resultados Agora</button>
+    <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:#1B5E20;cursor:pointer">
+      <input type="checkbox" id="auto-check" onchange="toggleAutoFetch(this.checked)"> Atualizar automaticamente a cada 5 min
+    </label>
+    <span style="font-size:12px;color:#757575" id="ultima-busca"></span>
+  </div>
+  <div id="tab-part">
+    <div class="card">
+      <div class="card-titulo">👥 Participantes</div>
+      <div class="alerta alerta-azul">💡 Gere um código por participante e envie pelo WhatsApp. Eles entram com esse código de qualquer aparelho.</div>
+      <div class="flex mt12" style="margin-bottom:20px">
+        <div class="form-group" style="flex:1;margin:0"><input type="text" id="inp-nome-novo" placeholder="Nome do participante" style="margin:0"></div>
+        <button class="btn btn-verde" onclick="gerarCodigo()" style="white-space:nowrap">+ Gerar Código</button>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;cursor:pointer;user-select:none" onclick="toggleLista()">
+        <span style="font-size:14px;font-weight:600;color:var(--cinza)" id="lista-count"></span>
+        <span id="lista-toggle-btn" style="font-size:13px;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:4px">
+          Ver participantes <span id="lista-arrow">▼</span>
+        </span>
+      </div>
+      <div id="lista-part" class="hidden"></div>
+    </div>
+  </div>
+  <div id="tab-res" class="hidden">
+    <div class="card">
+      <div class="card-titulo">📋 Resultados Oficiais</div>
+      <div class="alerta alerta-amar">⚠️ Preencha o placar real após cada jogo. Os pontos são calculados automaticamente.</div>
+      <div id="cont-res" class="mt12"></div>
+    </div>
+  </div>
+  <div id="tab-rank" class="hidden">
+    <div class="card">
+      <div class="card-titulo">🏆 Ranking Geral</div>
+      <div id="cont-rank"></div>
+    </div>
+  </div>
+</div>
+
+  <!-- TAB ADMIN -->
+  <div id="tab-admin" class="hidden">
+    <div class="card">
+      <div class="card-titulo">🛡️ Painel Super Admin — Steps</div>
+      <div class="alerta alerta-azul">Acesso exclusivo. Você pode redefinir senhas, ver o histórico completo e reenviar códigos de qualquer participante.</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0">
+        <div class="stat"><div class="stat-val" id="adm-total-part">—</div><div class="stat-lab">Total de Participantes</div></div>
+        <div class="stat"><div class="stat-val" id="adm-total-pal">—</div><div class="stat-lab">Com Palpites Salvos</div></div>
+      </div>
+
+      <div class="sep"></div>
+      <div style="font-size:16px;font-weight:700;margin-bottom:12px">🔑 Alterar Senhas</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+        <div>
+          <div class="form-group" style="margin-bottom:8px">
+            <label style="font-size:13px">Nova senha do Gestor</label>
+            <input type="text" id="adm-nova-senha-gestor" placeholder="Ex: fisio2026">
+          </div>
+          <button class="btn btn-azul btn-sm" onclick="alterarSenhaGestor()">Salvar senha do Gestor</button>
+          <div id="adm-msg-gestor" class="hidden" style="color:#2E7D32;font-size:13px;margin-top:6px;font-weight:700">✅ Salvo!</div>
+        </div>
+        <div>
+          <div class="form-group" style="margin-bottom:8px">
+            <label style="font-size:13px">Nova senha do Super Admin</label>
+            <input type="text" id="adm-nova-senha-admin" placeholder="Ex: steps@admin2026">
+          </div>
+          <button class="btn btn-azul btn-sm" onclick="alterarSenhaAdmin()">Salvar senha do Admin</button>
+          <div id="adm-msg-admin" class="hidden" style="color:#2E7D32;font-size:13px;margin-top:6px;font-weight:700">✅ Salvo!</div>
+        </div>
+      </div>
+
+      <div class="sep"></div>
+      <div style="font-size:16px;font-weight:700;margin-bottom:12px">🧹 Resetar Dados (Testes)</div>
+      <div class="alerta alerta-verm" style="font-size:13px">⚠️ Use apenas durante testes. O reset apaga <strong>tudo</strong>: participantes, palpites, resultados e histórico. Essa ação não pode ser desfeita.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:16px 0">
+        <div class="stat" style="cursor:pointer;border-color:#FFCDD2" onclick="resetarPalpites()">
+          <div style="font-size:28px">🗑️</div>
+          <div style="font-size:13px;font-weight:700;color:#B71C1C;margin-top:6px">Apagar só palpites</div>
+          <div style="font-size:11px;color:#757575;margin-top:4px">Mantém participantes e resultados</div>
+        </div>
+        <div class="stat" style="cursor:pointer;border-color:#FFCDD2" onclick="resetarResultados()">
+          <div style="font-size:28px">📋</div>
+          <div style="font-size:13px;font-weight:700;color:#B71C1C;margin-top:6px">Apagar só resultados</div>
+          <div style="font-size:11px;color:#757575;margin-top:4px">Mantém participantes e palpites</div>
+        </div>
+        <div class="stat" style="cursor:pointer;border:2px solid #B71C1C;background:#FFEBEE" onclick="resetarTudo()">
+          <div style="font-size:28px">💣</div>
+          <div style="font-size:13px;font-weight:700;color:#B71C1C;margin-top:6px">Resetar TUDO</div>
+          <div style="font-size:11px;color:#757575;margin-top:4px">Apaga absolutamente tudo</div>
+        </div>
+      </div>
+      <div id="adm-msg-reset" class="hidden alerta alerta-verde">✅ Reset concluído! O sistema está limpo.</div>
+
+      <div class="sep"></div>
+      <div style="font-size:16px;font-weight:700;margin-bottom:12px">📋 Histórico Completo de Códigos</div>
+      <div class="alerta alerta-verde" style="font-size:13px">Todos os códigos gerados ficam salvos aqui. Se um paciente perder o código, é só clicar em "Reenviar".</div>
+      <div id="adm-historico" class="mt12"></div>
+    </div>
+  </div>
+
+<!-- MODAL PALPITES DO PARTICIPANTE -->
+<div class="modal-bg" id="modal-palpites">
+  <div class="modal" style="max-width:640px;width:95%">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div>
+        <div style="font-size:18px;font-weight:700" id="modal-pal-titulo">Palpites de ...</div>
+        <div class="txt-cinza" id="modal-pal-sub"></div>
+      </div>
+      <button class="btn btn-outline btn-sm" onclick="fecharModalPalpites()">Fechar</button>
+    </div>
+    <div id="modal-pal-loading" style="text-align:center;padding:32px">
+      <div class="spinner"></div>
+      <div class="txt-cinza mt12">Carregando palpites...</div>
+    </div>
+    <div id="modal-pal-conteudo" class="hidden" style="max-height:500px;overflow-y:auto"></div>
+  </div>
+</div>
+
+<!-- MODAL WHATSAPP -->
+<div class="modal-bg" id="modal-wpp">
+  <div class="modal">
+    <div style="font-size:18px;font-weight:700;margin-bottom:16px">📱 Mensagem para enviar</div>
+    <div style="background:#E8F5E9;border-radius:10px;padding:16px;font-size:15px;line-height:1.7;white-space:pre-wrap" id="msg-wpp-txt"></div>
+    <div class="flex mt20">
+      <button class="btn btn-verde" onclick="copiarMsg()">📋 Copiar mensagem</button>
+      <button class="btn btn-outline" onclick="fecharModal()">Fechar</button>
+    </div>
+    <div id="copiado" class="alerta alerta-verde hidden mt12">✅ Copiado!</div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-functions-compat.js"></script>
+<script>
+// ── FIREBASE ─────────────────────────────────────────────────────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyBpTjvYGYFByf-ZwQkpLPAreEHIBK7_oEI",
+  authDomain: "bolao-copa-2026-24141.firebaseapp.com",
+  projectId: "bolao-copa-2026-24141",
+  storageBucket: "bolao-copa-2026-24141.firebasestorage.app",
+  messagingSenderId: "1093356702793",
+  appId: "1:1093356702793:web:d83d03c25cdd442f5c0398"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+const functions = firebase.app().functions('us-central1');
+
+let uidAtual = null;
+
+async function loginAnonimo(codigo){
+  try {
+    const vinculo = await db.collection('vinculos').doc(codigo).get();
+    if(vinculo.exists && vinculo.data().uid){
+      const uidSalvo = sessionStorage.getItem('bolao_uid_'+codigo);
+      if(uidSalvo && auth.currentUser && auth.currentUser.uid === uidSalvo){
+        uidAtual = uidSalvo;
+        return true;
+      }
+      uidAtual = null;
+      return false;
+    }
+    const cred = await auth.signInAnonymously();
+    uidAtual = cred.user.uid;
+    sessionStorage.setItem('bolao_uid_'+codigo, uidAtual);
+    await db.collection('vinculos').doc(codigo).set({
+      uid: uidAtual,
+      codigo: codigo,
+      criado: new Date().toISOString()
+    });
+    return true;
+  } catch(e){
+    console.error('Auth error:', e);
+    uidAtual = null;
+    return false;
+  }
+}
+
+async function resetarTokenParticipante(cod, nome){
+  const msg = 'Resetar acesso de '+nome+' ('+cod+')? Ele podera entrar de um novo dispositivo, mas o dispositivo antigo perdera o acesso.';
+  if(!confirm(msg)) return;
+  await db.collection('vinculos').doc(cod).delete();
+  alert('Feito! '+nome+' pode entrar de um novo dispositivo agora.');
+}
+
+async function ler(k){
+  try{
+    const docId = ('b26_'+k).replace(/[^a-zA-Z0-9_-]/g,'_');
+    const doc = await db.collection('bolao').doc(docId).get();
+    return doc.exists ? doc.data().valor : null;
+  }catch(e){console.error('ler erro:',e);return null;}
+}
+async function salvar(k,v){
+  try{
+    const docId = ('b26_'+k).replace(/[^a-zA-Z0-9_-]/g,'_');
+    await db.collection('bolao').doc(docId).set({valor:v});
+    return true;
+  }catch(e){console.error('salvar erro:',e);return false;}
+}
+
+async function lerPalpites(codigo){
+  try{
+    if(!uidAtual) return null;
+    const doc = await db.collection('palpites').doc(uidAtual).get();
+    return doc.exists ? doc.data().valor : null;
+  }catch(e){console.error('lerPalpites erro:',e);return null;}
+}
+async function salvarPalpitesAuth(codigo, valor){
+  try{
+    if(!uidAtual) return false;
+    await db.collection('palpites').doc(uidAtual).set({valor, codigo, atualizado: new Date().toISOString()});
+    await db.collection('bolao').doc(('b26_pal_'+codigo).replace(/[^a-zA-Z0-9_-]/g,'_')).set({valor, uid: uidAtual});
+    return true;
+  }catch(e){console.error('salvarPalpites erro:',e);return false;}
+}
+
+const GESTOR_UID_REF = 's2lN8cyAX8Wy9WP9s8D13SSfXXy2';
+const ADMIN_UID_REF  = 'q6dc5LMJHReFJGFn172SH4Wplx63';
+const API_KEY='82c472a50fba9bf7f222d8e2f3bd8de3';
+const API_HOST='https://v3.football.api-sports.io';
+const WORLD_CUP_ID=1;
+let nivelAcesso=null;
+
+window.addEventListener('load', async function(){
+  const nivel=sessionStorage.getItem('bolao_nivel');
+  const cod=sessionStorage.getItem('bolao_cod');
+  const nome=sessionStorage.getItem('bolao_nome');
+  if(nivel){
+    nivelAcesso=nivel;
+    document.getElementById('hdr-sub').textContent=nivel==='admin'?'Super Admin — Steps':'Gestor';
+    document.getElementById('btn-sair').classList.remove('hidden');
+    ir('pg-gestor');
+    await carregarGestor();
+  } else if(cod&&nome){
+    codAtual=cod;nomeAtual=nome;
+    const salvos=await ler('pal_'+cod)||{};
+    palAtual=salvos;
+    document.getElementById('palp-nome').textContent='👋 Olá, '+nome+'!';
+    document.getElementById('palp-cod-label').textContent='Código: '+cod;
+    document.getElementById('hdr-sub').textContent=nome;
+    document.getElementById('btn-sair').classList.remove('hidden');
+    renderPalpites();
+    ir('pg-palpites');
+  }
+});
+
+// ══════════════════════════════════════════════════════════════════════════════
+// CALENDÁRIO OFICIAL FIFA 2026 — Horário de Brasília (BRT)
+// Fonte: FIFA.com / trivela.com.br — atualizado em 09/06/2026
+// ══════════════════════════════════════════════════════════════════════════════
+const JOGOS=[
+  // ── 1ª RODADA ─────────────────────────────────────────────────────────────
+  // 11 JUN (Qui)
+  {n:1,  f:'Grupos',g:'A',pa:'México',          pb:'África do Sul',   data:'11/06/2026 16:00'},
+  {n:2,  f:'Grupos',g:'A',pa:'Coreia do Sul',   pb:'Rep. Tcheca',     data:'11/06/2026 23:00'},
+  // 12 JUN (Sex)
+  {n:3,  f:'Grupos',g:'B',pa:'Canadá',          pb:'Bósnia',          data:'12/06/2026 16:00'},
+  {n:4,  f:'Grupos',g:'D',pa:'Estados Unidos',  pb:'Paraguai',        data:'12/06/2026 22:00'},
+  // 13 JUN (Sáb)
+  {n:5,  f:'Grupos',g:'B',pa:'Catar',           pb:'Suíça',           data:'13/06/2026 16:00'},
+  {n:6,  f:'Grupos',g:'C',pa:'Brasil',          pb:'Marrocos',        data:'13/06/2026 19:00'},
+  {n:7,  f:'Grupos',g:'C',pa:'Haiti',           pb:'Escócia',         data:'13/06/2026 22:00'},
+  // 14 JUN (Dom)
+  {n:8,  f:'Grupos',g:'D',pa:'Austrália',       pb:'Turquia',         data:'14/06/2026 01:00'},
+  {n:9,  f:'Grupos',g:'E',pa:'Alemanha',        pb:'Curaçao',         data:'14/06/2026 14:00'},
+  {n:10, f:'Grupos',g:'F',pa:'Holanda',         pb:'Japão',           data:'14/06/2026 17:00'},
+  {n:11, f:'Grupos',g:'E',pa:'Costa do Marfim', pb:'Equador',         data:'14/06/2026 20:00'},
+  {n:12, f:'Grupos',g:'F',pa:'Suécia',          pb:'Tunísia',         data:'14/06/2026 23:00'},
+  // 15 JUN (Seg)
+  {n:13, f:'Grupos',g:'H',pa:'Espanha',         pb:'Cabo Verde',      data:'15/06/2026 13:00'},
+  {n:14, f:'Grupos',g:'G',pa:'Bélgica',         pb:'Egito',           data:'15/06/2026 16:00'},
+  {n:15, f:'Grupos',g:'H',pa:'Arábia Saudita',  pb:'Uruguai',         data:'15/06/2026 19:00'},
+  {n:16, f:'Grupos',g:'G',pa:'Irã',             pb:'Nova Zelândia',   data:'15/06/2026 22:00'},
+  // 16 JUN (Ter)
+  {n:17, f:'Grupos',g:'I',pa:'França',          pb:'Senegal',         data:'16/06/2026 16:00'},
+  {n:18, f:'Grupos',g:'I',pa:'Iraque',          pb:'Noruega',         data:'16/06/2026 19:00'},
+  {n:19, f:'Grupos',g:'J',pa:'Argentina',       pb:'Argélia',         data:'16/06/2026 22:00'},
+  // 17 JUN (Qua) — madrugada de Qua (início Ter)
+  {n:20, f:'Grupos',g:'J',pa:'Áustria',         pb:'Jordânia',        data:'17/06/2026 01:00'},
+  {n:21, f:'Grupos',g:'K',pa:'Portugal',        pb:'Congo',           data:'17/06/2026 14:00'},
+  {n:22, f:'Grupos',g:'L',pa:'Inglaterra',      pb:'Croácia',         data:'17/06/2026 17:00'},
+  {n:23, f:'Grupos',g:'L',pa:'Gana',            pb:'Panamá',          data:'17/06/2026 20:00'},
+  {n:24, f:'Grupos',g:'K',pa:'Uzbequistão',     pb:'Colômbia',        data:'17/06/2026 23:00'},
+  // ── 2ª RODADA ─────────────────────────────────────────────────────────────
+  // 18 JUN (Qui)
+  {n:25, f:'Grupos',g:'A',pa:'Rep. Tcheca',     pb:'África do Sul',   data:'18/06/2026 13:00'},
+  {n:26, f:'Grupos',g:'B',pa:'Suíça',           pb:'Bósnia',          data:'18/06/2026 16:00'},
+  {n:27, f:'Grupos',g:'B',pa:'Canadá',          pb:'Catar',           data:'18/06/2026 19:00'},
+  {n:28, f:'Grupos',g:'A',pa:'México',          pb:'Coreia do Sul',   data:'18/06/2026 22:00'},
+  // 19 JUN (Sex)
+  {n:29, f:'Grupos',g:'D',pa:'Estados Unidos',  pb:'Austrália',       data:'19/06/2026 16:00'},
+  {n:30, f:'Grupos',g:'C',pa:'Escócia',         pb:'Marrocos',        data:'19/06/2026 19:00'},
+  {n:31, f:'Grupos',g:'C',pa:'Brasil',          pb:'Haiti',           data:'19/06/2026 21:30'},
+  // 20 JUN (Sáb) — madrugada de Sáb (início Sex)
+  {n:32, f:'Grupos',g:'D',pa:'Turquia',         pb:'Paraguai',        data:'20/06/2026 00:00'},
+  {n:33, f:'Grupos',g:'F',pa:'Holanda',         pb:'Suécia',          data:'20/06/2026 14:00'},
+  {n:34, f:'Grupos',g:'E',pa:'Alemanha',        pb:'Costa do Marfim', data:'20/06/2026 17:00'},
+  {n:35, f:'Grupos',g:'E',pa:'Equador',         pb:'Curaçao',         data:'20/06/2026 21:00'},
+  // 21 JUN (Dom)
+  {n:36, f:'Grupos',g:'F',pa:'Tunísia',         pb:'Japão',           data:'21/06/2026 01:00'},
+  {n:37, f:'Grupos',g:'H',pa:'Espanha',         pb:'Arábia Saudita',  data:'21/06/2026 13:00'},
+  {n:38, f:'Grupos',g:'G',pa:'Bélgica',         pb:'Irã',             data:'21/06/2026 16:00'},
+  {n:39, f:'Grupos',g:'H',pa:'Uruguai',         pb:'Cabo Verde',      data:'21/06/2026 19:00'},
+  {n:40, f:'Grupos',g:'G',pa:'Nova Zelândia',   pb:'Egito',           data:'21/06/2026 22:00'},
+  // 22 JUN (Seg)
+  {n:41, f:'Grupos',g:'J',pa:'Argentina',       pb:'Áustria',         data:'22/06/2026 14:00'},
+  {n:42, f:'Grupos',g:'I',pa:'França',          pb:'Iraque',          data:'22/06/2026 18:00'},
+  {n:43, f:'Grupos',g:'I',pa:'Noruega',         pb:'Senegal',         data:'22/06/2026 21:00'},
+  // 23 JUN (Ter)
+  {n:44, f:'Grupos',g:'J',pa:'Jordânia',        pb:'Argélia',         data:'23/06/2026 00:00'},
+  {n:45, f:'Grupos',g:'K',pa:'Portugal',        pb:'Uzbequistão',     data:'23/06/2026 14:00'},
+  {n:46, f:'Grupos',g:'L',pa:'Inglaterra',      pb:'Gana',            data:'23/06/2026 17:00'},
+  {n:47, f:'Grupos',g:'L',pa:'Panamá',          pb:'Croácia',         data:'23/06/2026 20:00'},
+  {n:48, f:'Grupos',g:'K',pa:'Colômbia',        pb:'Congo',           data:'23/06/2026 23:00'},
+  // ── 3ª RODADA ─────────────────────────────────────────────────────────────
+  // 24 JUN (Qua)
+  {n:49, f:'Grupos',g:'B',pa:'Suíça',           pb:'Canadá',          data:'24/06/2026 16:00'},
+  {n:50, f:'Grupos',g:'B',pa:'Bósnia',          pb:'Catar',           data:'24/06/2026 16:00'},
+  {n:51, f:'Grupos',g:'C',pa:'Escócia',         pb:'Brasil',          data:'24/06/2026 19:00'},
+  {n:52, f:'Grupos',g:'C',pa:'Marrocos',        pb:'Haiti',           data:'24/06/2026 19:00'},
+  {n:53, f:'Grupos',g:'A',pa:'Rep. Tcheca',     pb:'México',          data:'24/06/2026 22:00'},
+  {n:54, f:'Grupos',g:'A',pa:'África do Sul',   pb:'Coreia do Sul',   data:'24/06/2026 22:00'},
+  // 25 JUN (Qui)
+  {n:55, f:'Grupos',g:'E',pa:'Curaçao',         pb:'Costa do Marfim', data:'25/06/2026 17:00'},
+  {n:56, f:'Grupos',g:'E',pa:'Equador',         pb:'Alemanha',        data:'25/06/2026 17:00'},
+  {n:57, f:'Grupos',g:'F',pa:'Japão',           pb:'Suécia',          data:'25/06/2026 20:00'},
+  {n:58, f:'Grupos',g:'F',pa:'Tunísia',         pb:'Holanda',         data:'25/06/2026 20:00'},
+  {n:59, f:'Grupos',g:'D',pa:'Turquia',         pb:'Estados Unidos',  data:'25/06/2026 23:00'},
+  {n:60, f:'Grupos',g:'D',pa:'Paraguai',        pb:'Austrália',       data:'25/06/2026 23:00'},
+  // 26 JUN (Sex)
+  {n:61, f:'Grupos',g:'I',pa:'Noruega',         pb:'França',          data:'26/06/2026 16:00'},
+  {n:62, f:'Grupos',g:'I',pa:'Senegal',         pb:'Iraque',          data:'26/06/2026 16:00'},
+  {n:63, f:'Grupos',g:'H',pa:'Cabo Verde',      pb:'Arábia Saudita',  data:'26/06/2026 21:00'},
+  {n:64, f:'Grupos',g:'H',pa:'Uruguai',         pb:'Espanha',         data:'26/06/2026 21:00'},
+  // 27 JUN (Sáb)
+  {n:65, f:'Grupos',g:'G',pa:'Egito',           pb:'Irã',             data:'27/06/2026 00:00'},
+  {n:66, f:'Grupos',g:'G',pa:'Nova Zelândia',   pb:'Bélgica',         data:'27/06/2026 00:00'},
+  {n:67, f:'Grupos',g:'L',pa:'Panamá',          pb:'Inglaterra',      data:'27/06/2026 18:00'},
+  {n:68, f:'Grupos',g:'L',pa:'Croácia',         pb:'Gana',            data:'27/06/2026 18:00'},
+  {n:69, f:'Grupos',g:'K',pa:'Colômbia',        pb:'Portugal',        data:'27/06/2026 20:30'},
+  {n:70, f:'Grupos',g:'K',pa:'Congo',           pb:'Uzbequistão',     data:'27/06/2026 20:30'},
+  {n:71, f:'Grupos',g:'J',pa:'Argélia',         pb:'Áustria',         data:'27/06/2026 23:00'},
+  {n:72, f:'Grupos',g:'J',pa:'Jordânia',        pb:'Argentina',       data:'27/06/2026 23:00'},
+  // ── RODADA 32 ─────────────────────────────────────────────────────────────
+  {n:73, f:'Rodada_32',pa:'2º Grupo A',   pb:'2º Grupo B',    data:'28/06/2026 16:00'},
+  {n:74, f:'Rodada_32',pa:'1º Grupo E',   pb:'Melhor 3º',     data:'29/06/2026 14:00'},
+  {n:75, f:'Rodada_32',pa:'1º Grupo F',   pb:'2º Grupo C',    data:'29/06/2026 17:30'},
+  {n:76, f:'Rodada_32',pa:'1º Grupo C',   pb:'2º Grupo F',    data:'29/06/2026 22:00'},
+  {n:77, f:'Rodada_32',pa:'1º Grupo I',   pb:'Melhor 3º',     data:'30/06/2026 14:00'},
+  {n:78, f:'Rodada_32',pa:'2º Grupo E',   pb:'2º Grupo I',    data:'30/06/2026 18:00'},
+  {n:79, f:'Rodada_32',pa:'1º Grupo A',   pb:'Melhor 3º',     data:'30/06/2026 22:00'},
+  {n:80, f:'Rodada_32',pa:'1º Grupo L',   pb:'Melhor 3º',     data:'01/07/2026 13:00'},
+  {n:81, f:'Rodada_32',pa:'1º Grupo D',   pb:'Melhor 3º',     data:'01/07/2026 17:00'},
+  {n:82, f:'Rodada_32',pa:'1º Grupo G',   pb:'Melhor 3º',     data:'01/07/2026 21:00'},
+  {n:83, f:'Rodada_32',pa:'2º Grupo K',   pb:'2º Grupo L',    data:'02/07/2026 16:00'},
+  {n:84, f:'Rodada_32',pa:'1º Grupo H',   pb:'2º Grupo J',    data:'02/07/2026 20:00'},
+  {n:85, f:'Rodada_32',pa:'1º Grupo B',   pb:'Melhor 3º',     data:'03/07/2026 00:00'},
+  {n:86, f:'Rodada_32',pa:'1º Grupo J',   pb:'2º Grupo H',    data:'03/07/2026 15:00'},
+  {n:87, f:'Rodada_32',pa:'1º Grupo K',   pb:'Melhor 3º',     data:'03/07/2026 17:00'},
+  {n:88, f:'Rodada_32',pa:'2º Grupo D',   pb:'2º Grupo G',    data:'03/07/2026 22:30'},
+  // ── OITAVAS ───────────────────────────────────────────────────────────────
+  {n:89, f:'Oitavas',pa:'Venc. Jogo 76',  pb:'Venc. Jogo 75', data:'04/07/2026 14:00'},
+  {n:90, f:'Oitavas',pa:'Venc. Jogo 74',  pb:'Venc. Jogo 73', data:'04/07/2026 18:00'},
+  {n:91, f:'Oitavas',pa:'Venc. Jogo 80',  pb:'Venc. Jogo 78', data:'05/07/2026 17:00'},
+  {n:92, f:'Oitavas',pa:'Venc. Jogo 77',  pb:'Venc. Jogo 79', data:'05/07/2026 21:00'},
+  {n:93, f:'Oitavas',pa:'Venc. Jogo 81',  pb:'Venc. Jogo 85', data:'06/07/2026 15:00'},
+  {n:94, f:'Oitavas',pa:'Venc. Jogo 84',  pb:'Venc. Jogo 82', data:'06/07/2026 20:00'},
+  {n:95, f:'Oitavas',pa:'Venc. Jogo 87',  pb:'Venc. Jogo 88', data:'07/07/2026 13:00'},
+  {n:96, f:'Oitavas',pa:'Venc. Jogo 83',  pb:'Venc. Jogo 86', data:'07/07/2026 17:00'},
+  // ── QUARTAS ───────────────────────────────────────────────────────────────
+  {n:97, f:'Quartas',pa:'Venc. Jogo 89',  pb:'Venc. Jogo 90', data:'09/07/2026 17:00'},
+  {n:98, f:'Quartas',pa:'Venc. Jogo 91',  pb:'Venc. Jogo 92', data:'10/07/2026 16:00'},
+  {n:99, f:'Quartas',pa:'Venc. Jogo 93',  pb:'Venc. Jogo 94', data:'11/07/2026 18:00'},
+  {n:100,f:'Quartas',pa:'Venc. Jogo 95',  pb:'Venc. Jogo 96', data:'11/07/2026 21:00'},
+  // ── SEMI ──────────────────────────────────────────────────────────────────
+  {n:101,f:'Semi',pa:'Venc. Jogo 97',   pb:'Venc. Jogo 98',  data:'14/07/2026 16:00'},
+  {n:102,f:'Semi',pa:'Venc. Jogo 99',   pb:'Venc. Jogo 100', data:'15/07/2026 16:00'},
+  // ── 3º LUGAR E FINAL ──────────────────────────────────────────────────────
+  {n:103,f:'Disputa_Terceiro',pa:'Perd. Semi 101',pb:'Perd. Semi 102',data:'18/07/2026 18:00'},
+  {n:104,f:'Final',           pa:'Venc. Semi 101',pb:'Venc. Semi 102',data:'19/07/2026 16:00'},
+];
+
+const FASES=[
+  {id:'Grupos',label:'Fase de Grupos — por ordem de data',cls:'grupos'},
+  {id:'Rodada_32',label:'Rodada de 32',cls:'r32'},
+  {id:'Oitavas',label:'Oitavas de Final',cls:'oitavas'},
+  {id:'Quartas',label:'Quartas de Final',cls:'quartas'},
+  {id:'Semi',label:'Semifinais',cls:'semi'},
+  {id:'Disputa_Terceiro',label:'Disputa 3º Lugar',cls:'terceiro'},
+  {id:'Final',label:'Final',cls:'final'},
+];
+
+const PTS={
+  Grupos:          {exato:5,  resultado:1},
+  Rodada_32:       {exato:10, resultado:2},
+  Oitavas:         {exato:15, resultado:3},
+  Quartas:         {exato:20, resultado:4},
+  Semi:            {exato:25, resultado:5},
+  Disputa_Terceiro:{exato:25, resultado:5},
+  Final:           {exato:30, resultado:6},
+};
+
+let codAtual=null,nomeAtual=null,palAtual={};
+
+function ir(pg){
+  document.querySelectorAll('.pagina').forEach(p=>p.classList.remove('ativa'));
+  document.getElementById(pg).classList.add('ativa');
+  window.scrollTo(0,0);
+}
+
+function sair(){
+  codAtual=null;nomeAtual=null;palAtual={};nivelAcesso=null;uidAtual=null;
+  sessionStorage.removeItem('bolao_nivel');
+  sessionStorage.removeItem('bolao_cod');
+  sessionStorage.removeItem('bolao_nome');
+  auth.signOut().catch(()=>{});
+  document.getElementById('inp-cod').value='';
+  document.getElementById('inp-senha').value='';
+  document.getElementById('hdr-sub').textContent='Bem-vindo!';
+  document.getElementById('btn-sair').classList.add('hidden');
+  ir('pg-inicio');
+}
+
+function bloqTecla(e){
+  const permitidas=['0','1','2','3','4','5','6','7','8','9','Backspace','Delete','ArrowLeft','ArrowRight','Tab'];
+  if(!permitidas.includes(e.key)) e.preventDefault();
+}
+function somenteInt(el){
+  el.value = el.value.replace(/[^0-9]/g,'');
+  if(el.value !== '' && parseInt(el.value) > 20) el.value = '20';
+}
+
+async function entrarCodigo(){
+  const cod=document.getElementById('inp-cod').value.trim().toUpperCase();
+  if(!cod){mostrarErr('err-cod','Digite seu código.');return;}
+  document.getElementById('err-cod').classList.add('hidden');
+  document.getElementById('load-cod').classList.remove('hidden');
+  try{
+    const parts = await ler('participantes') || {};
+    document.getElementById('load-cod').classList.add('hidden');
+    if(!parts[cod]){
+      mostrarErr('err-cod','❌ Código não encontrado. Verifique se digitou corretamente ou peça ao gestor.');
+      return;
+    }
+    const nome = parts[cod].nome;
+    try{
+      const customToken = await functions.httpsCallable('verificarCodigo')({ codigo: cod });
+      await auth.signInWithCustomToken(customToken.data.token);
+      uidAtual = "participante_" + cod.toLowerCase().replace(/[^a-z0-9]/g, "_");
+    } catch(e){
+      const cred = await auth.signInAnonymously();
+      uidAtual = cred.user.uid;
+    }
+    codAtual=cod; nomeAtual=nome;
+    sessionStorage.setItem('bolao_cod', cod);
+    sessionStorage.setItem('bolao_nome', nomeAtual);
+    const salvosPriv = await lerPalpites(cod);
+    const salvosPub  = await ler('pal_'+cod)||{};
+    palAtual = salvosPriv || salvosPub;
+    document.getElementById('palp-nome').textContent='👋 Olá, '+nomeAtual+'!';
+    document.getElementById('palp-cod-label').textContent='Código: '+cod;
+    document.getElementById('hdr-sub').textContent=nomeAtual;
+    document.getElementById('btn-sair').classList.remove('hidden');
+    renderPalpites();
+    ir('pg-palpites');
+  } catch(e){
+    document.getElementById('load-cod').classList.add('hidden');
+    mostrarErr('err-cod','❌ Erro ao verificar código. Verifique sua conexão.');
+    console.error(e);
+  }
+}
+
+function mostrarErr(id,msg){const el=document.getElementById(id);el.textContent=msg;el.classList.remove('hidden');}
+
+function calcClassificados(res){
+  const grupos = {};
+  'ABCDEFGHIJKL'.split('').forEach(g => { grupos[g] = {}; });
+  JOGOS.filter(j=>j.f==='Grupos').forEach(j=>{
+    const r = res[j.n];
+    if(!r||r.ga==null||r.gb==null) return;
+    const g = j.g;
+    if(!grupos[g][j.pa]) grupos[g][j.pa]={pts:0,sg:0,gm:0};
+    if(!grupos[g][j.pb]) grupos[g][j.pb]={pts:0,sg:0,gm:0};
+    const ga=+r.ga, gb=+r.gb;
+    if(ga>gb){ grupos[g][j.pa].pts+=3; }
+    else if(gb>ga){ grupos[g][j.pb].pts+=3; }
+    else { grupos[g][j.pa].pts+=1; grupos[g][j.pb].pts+=1; }
+    grupos[g][j.pa].sg+=(ga-gb); grupos[g][j.pa].gm+=ga;
+    grupos[g][j.pb].sg+=(gb-ga); grupos[g][j.pb].gm+=gb;
+  });
+  const rank = {};
+  'ABCDEFGHIJKL'.split('').forEach(g=>{
+    const times = Object.entries(grupos[g]).sort((a,b)=>
+      b[1].pts-a[1].pts || b[1].sg-a[1].sg || b[1].gm-a[1].gm
+    );
+    rank[g] = times.map(t=>t[0]);
+  });
+  const r32map = {
+    73:[rank['A']?.[0],rank['B']?.[1]],74:[rank['C']?.[0],rank['D']?.[1]],
+    75:[rank['E']?.[0],rank['F']?.[1]],76:[rank['G']?.[0],rank['H']?.[1]],
+    77:[rank['I']?.[0],rank['J']?.[1]],78:[rank['K']?.[0],rank['L']?.[1]],
+    79:['3º Melhor',rank['C']?.[0]],80:[rank['B']?.[0],rank['A']?.[1]],
+    81:[rank['D']?.[0],rank['C']?.[1]],82:[rank['F']?.[0],rank['E']?.[1]],
+    83:[rank['H']?.[0],rank['G']?.[1]],84:[rank['J']?.[0],rank['I']?.[1]],
+    85:[rank['L']?.[0],rank['K']?.[1]],86:['3º Melhor',rank['D']?.[0]],
+    87:['3º Melhor',rank['E']?.[0]],88:['3º Melhor',rank['F']?.[0]],
+  };
+  const venc = {};
+  [73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88].forEach(n=>{
+    const r2=res[n]; const times=r32map[n];
+    if(!r2||r2.ga==null||!times?.[0]||!times?.[1]){venc[n]=null;return;}
+    const ga=+r2.ga,gb=+r2.gb;
+    if(ga>gb)venc[n]=times[0]; else if(gb>ga)venc[n]=times[1];
+    else if(r2.pena!=null)venc[n]=+r2.pena>+r2.penb?times[0]:times[1];
+    else venc[n]=null;
+  });
+  const nomes = {};
+  JOGOS.filter(j=>j.f==='Grupos').forEach(j=>{nomes[j.n]={pa:j.pa,pb:j.pb};});
+  [73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88].forEach(n=>{
+    const t=r32map[n];
+    nomes[n]={pa:t?.[0]||'1º Classificado',pb:t?.[1]||'2º Classificado'};
+  });
+  const oitPairs=[[89,[73,74]],[90,[75,76]],[91,[77,78]],[92,[79,80]],[93,[81,82]],[94,[83,84]],[95,[85,86]],[96,[87,88]]];
+  oitPairs.forEach(([n,[a,b]])=>{
+    nomes[n]={pa:venc[a]||'Venc. Jogo '+a,pb:venc[b]||'Venc. Jogo '+b};
+  });
+  const vencOit={};
+  oitPairs.forEach(([n,[a,b]])=>{
+    const r2=res[n];const t=nomes[n];
+    if(!r2||r2.ga==null){vencOit[n]=null;return;}
+    const ga=+r2.ga,gb=+r2.gb;
+    if(ga>gb)vencOit[n]=t.pa; else if(gb>ga)vencOit[n]=t.pb;
+    else if(r2.pena!=null)vencOit[n]=+r2.pena>+r2.penb?t.pa:t.pb;
+    else vencOit[n]=null;
+  });
+  const qPairs=[[97,[89,90]],[98,[91,92]],[99,[93,94]],[100,[95,96]]];
+  qPairs.forEach(([n,[a,b]])=>{
+    nomes[n]={pa:vencOit[a]||'Venc. Jogo '+a,pb:vencOit[b]||'Venc. Jogo '+b};
+  });
+  const vencQ={};
+  qPairs.forEach(([n,[a,b]])=>{
+    const r2=res[n];const t=nomes[n];
+    if(!r2||r2.ga==null){vencQ[n]=null;return;}
+    const ga=+r2.ga,gb=+r2.gb;
+    if(ga>gb)vencQ[n]=t.pa; else if(gb>ga)vencQ[n]=t.pb;
+    else if(r2.pena!=null)vencQ[n]=+r2.pena>+r2.penb?t.pa:t.pb;
+    else vencQ[n]=null;
+  });
+  nomes[101]={pa:vencQ[97]||'Venc. Quartas 97',pb:vencQ[98]||'Venc. Quartas 98'};
+  nomes[102]={pa:vencQ[99]||'Venc. Quartas 99',pb:vencQ[100]||'Venc. Quartas 100'};
+  const vencS={};
+  [101,102].forEach(n=>{
+    const r2=res[n];const t=nomes[n];
+    if(!r2||r2.ga==null){vencS[n]=null;return;}
+    const ga=+r2.ga,gb=+r2.gb;
+    if(ga>gb)vencS[n]={v:t.pa,p:t.pb}; else if(gb>ga)vencS[n]={v:t.pb,p:t.pa};
+    else if(r2.pena!=null)vencS[n]=+r2.pena>+r2.penb?{v:t.pa,p:t.pb}:{v:t.pb,p:t.pa};
+    else vencS[n]=null;
+  });
+  nomes[103]={pa:vencS[101]?.p||'Perd. Semi 101',pb:vencS[102]?.p||'Perd. Semi 102'};
+  nomes[104]={pa:vencS[101]?.v||'Venc. Semi 101',pb:vencS[102]?.v||'Venc. Semi 102'};
+  return {nomes,rank,venc,vencOit,vencQ,vencS};
+}
+
+function resultadosFase(res,fase){
+  return JOGOS.filter(j=>j.f===fase).filter(j=>{
+    const r=res[j.n];return r&&r.ga!=null&&r.gb!=null;
+  }).length;
+}
+function totalJogosFase(fase){return JOGOS.filter(j=>j.f===fase).length;}
+
+async function renderPalpites(){
+  const c=document.getElementById('fases-container');
+  c.innerHTML='<div style="text-align:center;padding:40px"><div class="spinner"></div><div class="txt-cinza mt12">Carregando jogos...</div></div>';
+  let res={};let nomes={};
+  try{
+    res=await ler('resultados')||{};
+    const calc=calcClassificados(res);
+    nomes=calc.nomes;
+  }catch(e){console.error('Erro ao carregar resultados:',e);res={};nomes={};}
+  const r72=resultadosFase(res,'Grupos');
+  const r16=resultadosFase(res,'Rodada_32');
+  const r8 =resultadosFase(res,'Oitavas');
+  const r4 =resultadosFase(res,'Quartas');
+  const r2 =resultadosFase(res,'Semi');
+  const faseLib={
+    'Grupos':true,'Rodada_32':r72===72,'Oitavas':r16===16,
+    'Quartas':r8===8,'Semi':r4===4,'Disputa_Terceiro':r2===2,'Final':r2===2,
+  };
+  const msgBloq={
+    'Rodada_32':'Aguarde: gestor precisa cadastrar os 72 resultados dos grupos ('+r72+'/72)',
+    'Oitavas':'Aguarde: gestor precisa cadastrar os 16 resultados da Rodada 32 ('+r16+'/16)',
+    'Quartas':'Aguarde: gestor precisa cadastrar os 8 resultados das Oitavas ('+r8+'/8)',
+    'Semi':'Aguarde: gestor precisa cadastrar os 4 resultados das Quartas ('+r4+'/4)',
+    'Disputa_Terceiro':'Aguarde: gestor precisa cadastrar os 2 resultados das Semifinais ('+r2+'/2)',
+    'Final':'Aguarde: gestor precisa cadastrar os 2 resultados das Semifinais ('+r2+'/2)',
+  };
+  c.innerHTML='';
+  FASES.forEach(fase=>{
+    const jogos=JOGOS.filter(j=>j.f===fase.id);
+    const div=document.createElement('div');div.style.marginBottom='28px';
+    const pre=jogos.filter(j=>{const p=palAtual[j.n];return p&&p.ga!=null&&p.gb!=null;}).length;
+    const liberado=faseLib[fase.id]!==false;
+    const bloqueado=!liberado;
+    let labelExtra;
+    if(bloqueado){
+      labelExtra='<span style="font-size:11px;background:#FFECB3;color:#E65100;padding:3px 10px;border-radius:10px;margin-left:8px">🔒 '+msgBloq[fase.id]+'</span>';
+    }else{
+      labelExtra='<span style="font-size:12px;opacity:.75;margin-left:auto">'+pre+'/'+jogos.length+' preenchidos</span>';
+    }
+    div.innerHTML='<div class="fase-hdr f-'+fase.cls+'">⚽ '+fase.label+' '+labelExtra+'</div>';
+    jogos.forEach(j=>{
+      const p=palAtual[j.n]||{};
+      const isE=j.f!=='Grupos';
+      const ok=p.ga!=null&&p.gb!=null;
+      const nomeA=nomes[j.n]?.pa||j.pa;
+      const nomeB=nomes[j.n]?.pb||j.pb;
+      const agora=new Date();
+      let jogoLocked=false;let dataLabel='';
+      if(j.data){
+        const [datePart,timePart]=j.data.split(' ');
+        const [d,m,a]=datePart.split('/');
+        const [h,min]=timePart.split(':');
+        const jogoTime=new Date(+a,+m-1,+d,+h,+min);
+        jogoLocked=agora>=jogoTime;
+        const diasSemana=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+        dataLabel=diasSemana[jogoTime.getDay()]+' '+d+'/'+m+' '+timePart+'h';
+      }
+      const finalLocked=bloqueado||jogoLocked;
+      const card=document.createElement('div');
+      card.className='jogo-card'+(ok?' ok':'')+(finalLocked?' bloqueado':'');
+      card.id='jc-'+j.n;
+      const dis=finalLocked?'disabled':'';
+      const disStyle=finalLocked?'style="opacity:0.4;cursor:not-allowed;background:#F5F5F5"':'';
+      let html='<div class="jogo-topo">';
+      html+='<span class="jogo-num">Jogo #'+j.n+(j.g?' — Grupo '+j.g:'')+' · '+dataLabel+'</span>';
+      if(finalLocked&&jogoLocked&&!bloqueado){
+        html+='<span style="background:#FFECB3;color:#E65100;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:700">🔒 Jogo iniciado</span>';
+      }
+      html+=ok?'<span style="color:#2E7D32;font-size:13px;font-weight:700">✓ Preenchido</span>':'';
+      html+='</div><div class="placar-row">';
+      html+='<div class="pais dir">'+nomeA+'</div>';
+      const gaVal=(p.ga!=null&&p.ga!==undefined&&p.gb!=null&&p.gb!==undefined)?p.ga:'';
+      const gbVal=(p.ga!=null&&p.ga!==undefined&&p.gb!=null&&p.gb!==undefined)?p.gb:'';
+      html+='<input type="text" inputmode="numeric" pattern="[0-9]*" class="gol" data-n="'+j.n+'" data-c="ga" value="'+gaVal+'" placeholder="?" '+dis+' '+disStyle+' oninput="somenteInt(this);muda(this.dataset.n,this.dataset.c,this.value)" onkeydown="bloqTecla(event)">';
+      html+='<div class="vs">×</div>';
+      html+='<input type="text" inputmode="numeric" pattern="[0-9]*" class="gol" data-n="'+j.n+'" data-c="gb" value="'+gbVal+'" placeholder="?" '+dis+' '+disStyle+' oninput="somenteInt(this);muda(this.dataset.n,this.dataset.c,this.value)" onkeydown="bloqTecla(event)">';
+      html+='<div class="pais">'+nomeB+'</div>';
+      html+='</div>';
+      if(isE&&!finalLocked){
+        html+='<div class="pen-row"><span>Pênaltis (se houver):</span>';
+        html+='<input type="text" inputmode="numeric" pattern="[0-9]*" class="pen" data-n="'+j.n+'" data-c="pena" value="'+(p.pena??'')+'" placeholder="–" oninput="somenteInt(this);muda(this.dataset.n,this.dataset.c,this.value)" onkeydown="bloqTecla(event)">';
+        html+='<span>×</span>';
+        html+='<input type="text" inputmode="numeric" pattern="[0-9]*" class="pen" data-n="'+j.n+'" data-c="penb" value="'+(p.penb??'')+'" placeholder="–" oninput="somenteInt(this);muda(this.dataset.n,this.dataset.c,this.value)" onkeydown="bloqTecla(event)">';
+        html+='</div>';
+      }
+      card.innerHTML=html;
+      div.appendChild(card);
+    });
+    c.appendChild(div);
+  });
+  atuProg();
+}
+
+function muda(n,campo,val){
+  if(!palAtual[n])palAtual[n]={};
+  palAtual[n][campo]=val===''?null:parseInt(val);
+  const p=palAtual[n];
+  const gaOk=p.ga!==null&&p.ga!==undefined;
+  const gbOk=p.gb!==null&&p.gb!==undefined;
+  const ok=gaOk&&gbOk;
+  const incompleto=(gaOk&&!gbOk)||(!gaOk&&gbOk);
+  const card=document.getElementById('jc-'+n);
+  if(card){
+    if(ok)card.className='jogo-card ok';
+    else if(incompleto)card.className='jogo-card incompleto';
+    else card.className='jogo-card';
+  }
+  atuProg();
+}
+
+function atuProg(){
+  let q=0;JOGOS.forEach(j=>{const p=palAtual[j.n];if(p&&p.ga!=null&&p.gb!=null)q++;});
+  const pct=Math.round(q/104*100);
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-txt').textContent=`${q} de 104 jogos preenchidos (${pct}%)`;
+}
+
+async function salvarPalpites(){
+  document.getElementById('alerta-salvo').classList.add('hidden');
+  document.getElementById('alerta-err-salvo').classList.add('hidden');
+  document.getElementById('alerta-incompleto').classList.add('hidden');
+  const agora=new Date();
+  let incompletos=0;
+  JOGOS.forEach(j=>{
+    if(!j.data)return;
+    const [datePart,timePart]=j.data.split(' ');
+    const [d,m,a]=datePart.split('/');
+    const [h,min]=timePart.split(':');
+    const jogoTime=new Date(+a,+m-1,+d,+h,+min);
+    if(agora>=jogoTime)return;
+    const p=palAtual[j.n];
+    const gaOk=p&&p.ga!==null&&p.ga!==undefined&&p.ga!=='';
+    const gbOk=p&&p.gb!==null&&p.gb!==undefined&&p.gb!=='';
+    if((gaOk&&!gbOk)||(!gaOk&&gbOk))incompletos++;
+  });
+  if(incompletos>0){
+    const el=document.getElementById('alerta-incompleto');
+    el.textContent='⚠️ Você preencheu só um lado de '+incompletos+' jogo(s). Preencha os dois placares ou deixe o jogo em branco.';
+    el.classList.remove('hidden');
+    window.scrollTo(0,0);
+    return;
+  }
+  if(!uidAtual){alert('Este dispositivo nao esta autorizado a salvar palpites.');return;}
+  const ok=await salvarPalpitesAuth(codAtual,palAtual);
+  if(ok){document.getElementById('alerta-salvo').classList.remove('hidden');setTimeout(()=>document.getElementById('alerta-salvo').classList.add('hidden'),5000);}
+  else{document.getElementById('alerta-err-salvo').classList.remove('hidden');}
+}
+
+async function entrarGestor(){
+  const email=document.getElementById('inp-email').value.trim();
+  const senha=document.getElementById('inp-senha').value;
+  if(!email||!senha){mostrarErr('err-senha','Preencha e-mail e senha.');return;}
+  document.getElementById('err-senha').classList.add('hidden');
+  document.getElementById('load-gestor').classList.remove('hidden');
+  try{
+    const cred=await auth.signInWithEmailAndPassword(email,senha);
+    const uid=cred.user.uid;
+    document.getElementById('load-gestor').classList.add('hidden');
+    if(uid==='q6dc5LMJHReFJGFn172SH4Wplx63'){nivelAcesso='admin';}
+    else if(uid==='s2lN8cyAX8Wy9WP9s8D13SSfXXy2'){nivelAcesso='gestor';}
+    else{await auth.signOut();mostrarErr('err-senha','❌ Acesso não autorizado.');return;}
+  }catch(e){
+    document.getElementById('load-gestor').classList.add('hidden');
+    mostrarErr('err-senha','❌ E-mail ou senha incorretos.');
+    return;
+  }
+  document.getElementById('err-senha').classList.add('hidden');
+  document.getElementById('hdr-sub').textContent=nivelAcesso==='admin'?'Super Admin — Steps':'Gestor';
+  document.getElementById('btn-sair').classList.remove('hidden');
+  sessionStorage.setItem('bolao_nivel',nivelAcesso);
+  ir('pg-gestor');
+  await carregarGestor();
+}
+
+async function carregarGestor(){
+  const btnAdmin=document.getElementById('tab-btn-admin');
+  if(btnAdmin)btnAdmin.style.display=nivelAcesso==='admin'?'':'none';
+  const autoBar=document.getElementById('auto-result-bar');
+  if(autoBar)autoBar.classList.remove('hidden');
+  const hdr=document.getElementById('hdr-sub');
+  if(hdr&&nivelAcesso==='admin')hdr.innerHTML='<span style="background:#FFF9C4;color:#E65100;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700">🛡️ SUPER ADMIN</span>';
+  const parts=await ler('participantes')||{};
+  const res=await ler('resultados')||{};
+  const total=Object.keys(parts).length;
+  let comPal=0;
+  for(const cod of Object.keys(parts)){const p=await ler('pal_'+cod);if(p&&Object.keys(p).length>0)comPal++;}
+  const comRes=Object.values(res).filter(r=>r&&r.ga!=null).length;
+  document.getElementById('stats').innerHTML=`
+    <div class="stat"><div class="stat-val">${total}</div><div class="stat-lab">Participantes</div></div>
+    <div class="stat"><div class="stat-val">${comPal}</div><div class="stat-lab">Enviaram Palpites</div></div>
+    <div class="stat"><div class="stat-val">${comRes}</div><div class="stat-lab">Resultados Cadastrados</div></div>
+    <div class="stat"><div class="stat-val">${104-comRes}</div><div class="stat-lab">Jogos Pendentes</div></div>`;
+  renderPart(parts);
+  await renderRes(res);
+}
+
+async function abrirTab(id){
+  ['tab-part','tab-res','tab-rank','tab-admin'].forEach(t=>document.getElementById(t).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  const tabs=['tab-part','tab-res','tab-rank','tab-admin'];
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('ativa',tabs[i]===id));
+  if(id==='tab-rank')await calcRanking();
+  if(id==='tab-admin')await carregarAdmin();
+}
+
+async function gerarCodigo(){
+  const nome=document.getElementById('inp-nome-novo').value.trim();
+  if(!nome){alert('Digite o nome do participante.');return;}
+  const parts=await ler('participantes')||{};
+  const partes=nome.toUpperCase().replace(/[^A-Z ]/g,'').split(' ').filter(Boolean);
+  const pfx=partes.length>1?partes[0].substring(0,4)+partes[partes.length-1].substring(0,3):partes[0].substring(0,6);
+  const cod=pfx+'-'+Math.floor(1000+Math.random()*9000);
+  const agora=new Date().toISOString();
+  parts[cod]={nome,criado:agora};
+  await salvar('participantes',parts);
+  const hist=await ler('historico')||[];
+  hist.push({cod,nome,criado:agora,envios:[{quando:agora,quem:'gestor'}]});
+  await salvar('historico',hist);
+  document.getElementById('inp-nome-novo').value='';
+  renderPart(parts);
+  mostrarWpp(nome,cod);
+}
+
+function toggleLista(){
+  const el=document.getElementById('lista-part');
+  const arrow=document.getElementById('lista-arrow');
+  const btn=document.getElementById('lista-toggle-btn');
+  const hidden=el.classList.contains('hidden');
+  el.classList.toggle('hidden');
+  arrow.textContent=hidden?'▲':'▼';
+  btn.childNodes[0].textContent=hidden?'Ocultar participantes ':'Ver participantes ';
+}
+
+function renderPart(parts){
+  const el=document.getElementById('lista-part');
+  const entries=Object.entries(parts);
+  const countEl=document.getElementById('lista-count');
+  if(countEl)countEl.textContent=entries.length+' participante(s) cadastrado(s)';
+  if(!entries.length){el.innerHTML='<div class="txt-cinza txt-c" style="padding:24px">Nenhum participante cadastrado.</div>';return;}
+  let h=`<table class="tabela"><thead><tr><th>Nome</th><th>Código</th><th>Ações</th><th>Remover</th></tr></thead><tbody>`;
+  entries.forEach(([cod,info])=>{
+    h+=`<tr>
+      <td style="font-weight:700">${info.nome}</td>
+      <td><code style="background:#F5F5F5;padding:4px 10px;border-radius:6px;font-size:15px;font-weight:700;letter-spacing:1px">${cod}</code></td>
+      <td style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn btn-azul btn-sm" onclick="verPalpitesParticipante('${cod}','${info.nome}')">👁 Ver Palpites</button>
+        <button class="btn btn-verde btn-sm" onclick="mostrarWpp('${info.nome}','${cod}')">📱 Mensagem</button>
+        <button class="btn btn-outline btn-sm" onclick="resetarTokenParticipante('${cod}','${info.nome}')" title="Permitir acesso de novo dispositivo">🔄 Reset</button>
+      </td>
+      <td><button class="btn btn-vermelho btn-sm" onclick="remover('${cod}','${info.nome}')">🗑</button></td>
+    </tr>`;
+  });
+  h+='</tbody></table>';el.innerHTML=h;
+}
+
+async function remover(cod,nome){
+  if(!confirm(`Remover ${nome} (${cod})? Os palpites também serão apagados.`))return;
+  const parts=await ler('participantes')||{};
+  delete parts[cod];
+  await salvar('participantes',parts);
+  await salvar('pal_'+cod,{});
+  renderPart(parts);
+  await carregarGestor();
+}
+
+async function renderRes(res){
+  if(!res)res=await ler('resultados')||{};
+  let h='';
+  FASES.forEach(fase=>{
+    const jogos=JOGOS.filter(j=>j.f===fase.id);
+    h+=`<div class="fase-hdr f-${fase.cls}" style="margin-bottom:10px">⚽ ${fase.label}</div>`;
+    jogos.forEach(j=>{
+      const r=res[j.n]||{};const ok=r.ga!=null&&r.gb!=null;const isE=j.f!=='Grupos';
+      h+=`<div class="jogo-card ${ok?'ok':''}" style="margin-bottom:10px">
+        <div class="jogo-topo"><span class="jogo-num">Jogo #${j.n}${j.g?' — Grupo '+j.g:''}</span>${ok?'<span style="color:#2E7D32;font-size:13px;font-weight:700">✓ Cadastrado</span>':''}</div>
+        <div class="placar-row">
+          <div class="pais dir">${j.pa}</div>
+          <input type="number" min="0" max="20" class="gol" value="${r.ga??''}" placeholder="0" onchange="salvarRes(${j.n},'ga',this.value)">
+          <div class="vs">×</div>
+          <input type="number" min="0" max="20" class="gol" value="${r.gb??''}" placeholder="0" onchange="salvarRes(${j.n},'gb',this.value)">
+          <div class="pais">${j.pb}</div>
+        </div>
+        ${isE?`<div class="pen-row"><span>Pênaltis:</span>
+          <input type="number" min="0" max="20" class="pen" value="${r.pena??''}" placeholder="–" onchange="salvarRes(${j.n},'pena',this.value)">
+          <span>×</span>
+          <input type="number" min="0" max="20" class="pen" value="${r.penb??''}" placeholder="–" onchange="salvarRes(${j.n},'penb',this.value)">
+        </div>`:''}
+      </div>`;
+    });
+  });
+  document.getElementById('cont-res').innerHTML=h;
+}
+
+async function salvarRes(n,campo,val){
+  const res=await ler('resultados')||{};
+  if(!res[n])res[n]={};
+  res[n][campo]=val===''?null:parseInt(val);
+  await salvar('resultados',res);
+  await carregarGestor();
+}
+
+async function calcRanking(){
+  const parts=await ler('participantes')||{};
+  const res=await ler('resultados')||{};
+  const el=document.getElementById('cont-rank');
+  const entries=Object.entries(parts);
+  if(!entries.length){el.innerHTML='<div class="txt-cinza txt-c" style="padding:24px">Nenhum participante.</div>';return;}
+  el.innerHTML='<div style="padding:32px;text-align:center"><div class="spinner"></div><div class="txt-cinza mt12">Calculando...</div></div>';
+  const lista=[];
+  for(const [cod,info] of entries){
+    const pal=await ler('pal_'+cod)||{};
+    const pts=calcPts(pal,res);
+    const qtd=Object.values(pal).filter(p=>p&&p.ga!=null).length;
+    lista.push({nome:info.nome,pts,qtd});
+  }
+  lista.sort((a,b)=>b.pts-a.pts||b.qtd-a.qtd);
+  let h='';
+  lista.forEach((item,i)=>{
+    const pos=i+1;
+    const med=pos===1?'🥇':pos===2?'🥈':pos===3?'🥉':pos+'º';
+    const bg=pos===1?'#FFF9C4':pos===2?'#F5F5F5':pos===3?'#FBE9E7':'white';
+    h+=`<div class="rank-item" style="background:${bg}">
+      <div class="rank-pos">${med}</div>
+      <div style="flex:1"><div style="font-size:16px;font-weight:700">${item.nome}</div><div class="txt-cinza">${item.qtd}/104 palpites</div></div>
+      <div style="text-align:right"><div class="rank-pts">${item.pts}</div><div class="txt-cinza">pontos</div></div>
+    </div>`;
+  });
+  el.innerHTML=h||'<div class="txt-cinza txt-c" style="padding:24px">Cadastre resultados para ver a pontuação.</div>';
+}
+
+function calcPts(pal,res){
+  let tot=0;
+  JOGOS.forEach(j=>{
+    const p=pal[j.n],r=res[j.n];
+    if(!p||!r)return;
+    if(p.ga==null||p.gb==null||r.ga==null||r.gb==null)return;
+    const pts=PTS[j.f]||PTS.Grupos;
+    const rA=+r.ga,rB=+r.gb,pA=+p.ga,pB=+p.gb;
+    if(pA===rA&&pB===rB){tot+=pts.exato;}
+    else{
+      const rR=rA>rB?1:rB>rA?-1:0;
+      const pR=pA>pB?1:pB>pA?-1:0;
+      if(rR===pR)tot+=pts.resultado;
+    }
+  });
+  return tot;
+}
+
+let msgAtual='';
+async function registrarEnvio(cod){
+  const hist=await ler('historico')||[];
+  const entry=hist.find(h=>h.cod===cod);
+  if(entry){
+    if(!entry.envios)entry.envios=[];
+    entry.envios.push({quando:new Date().toISOString(),quem:nivelAcesso||'gestor'});
+    await salvar('historico',hist);
+  }
+}
+function mostrarWpp(nome,cod){
+  const url=window.location.href.split('?')[0];
+  msgAtual=`Olá, ${nome}! 😊⚽\n\nVocê está participando do *Bolão da Copa 2026*!\n\nPara preencher seus palpites, acesse o link abaixo e use seu código:\n\n🔗 *${url}*\n\n🔑 *Seu código: ${cod}*\n\nGuarde esse código — você vai precisar dele para entrar em qualquer celular ou computador, e para continuar de onde parou!\n\nQualquer dúvida, me chame! 🏆`;
+  document.getElementById('msg-wpp-txt').textContent=msgAtual;
+  document.getElementById('copiado').classList.add('hidden');
+  document.getElementById('modal-wpp').classList.add('aberto');
+  registrarEnvio(cod);
+}
+function copiarMsg(){navigator.clipboard.writeText(msgAtual).then(()=>{document.getElementById('copiado').classList.remove('hidden');});}
+
+// ── API FOOTBALL ─────────────────────────────────────────────────────────────
+let autoFetchInterval=null;
+const NOMES_API={
+  'Mexico':'México','South Africa':'África do Sul','South Korea':'Coreia do Sul',
+  'Czech Republic':'Rep. Tcheca','Canada':'Canadá','Bosnia':'Bósnia',
+  'Bosnia and Herzegovina':'Bósnia','Qatar':'Catar','Switzerland':'Suíça',
+  'Brazil':'Brasil','Morocco':'Marrocos','Haiti':'Haiti','Scotland':'Escócia',
+  'USA':'Estados Unidos','United States':'Estados Unidos','Paraguay':'Paraguai',
+  'Australia':'Austrália','Turkey':'Turquia','Germany':'Alemanha',
+  "Cote d'Ivoire":'Costa do Marfim',"Ivory Coast":'Costa do Marfim',
+  'Ecuador':'Equador','Curacao':'Curaçao','Netherlands':'Holanda',
+  'Japan':'Japão','Sweden':'Suécia','Tunisia':'Tunísia','Belgium':'Bélgica',
+  'Egypt':'Egito','Iran':'Irã','New Zealand':'Nova Zelândia','Spain':'Espanha',
+  'Cape Verde':'Cabo Verde','Saudi Arabia':'Arábia Saudita','Uruguay':'Uruguai',
+  'France':'França','Senegal':'Senegal','Iraq':'Iraque','Norway':'Noruega',
+  'Argentina':'Argentina','Algeria':'Argélia','Austria':'Áustria',
+  'Jordan':'Jordânia','Portugal':'Portugal','DR Congo':'Congo',
+  'Congo DR':'Congo','Uzbekistan':'Uzbequistão','Colombia':'Colômbia',
+  'England':'Inglaterra','Croatia':'Croácia','Ghana':'Gana','Panama':'Panamá',
+};
+function normalizarNome(nome){return NOMES_API[nome]||nome;}
+
+async function buscarResultadosAPI(){
+  const btn=document.getElementById('btn-buscar');
+  const status=document.getElementById('auto-status');
+  if(btn)btn.disabled=true;
+  if(status)status.textContent='Buscando resultados...';
+  try{
+    const resp=await fetch(API_HOST+'/fixtures?league='+WORLD_CUP_ID+'&season=2026&status=FT',
+      {headers:{'x-apisports-key':API_KEY}});
+    const data=await resp.json();
+    if(!data.response||data.response.length===0){
+      if(status)status.textContent='Nenhum jogo finalizado encontrado ainda.';
+      if(btn)btn.disabled=false;return;
+    }
+    const resultadosAtuais=await ler('resultados')||{};
+    let atualizados=0;
+    data.response.forEach(fixture=>{
+      const homeNome=normalizarNome(fixture.teams.home.name);
+      const awayNome=normalizarNome(fixture.teams.away.name);
+      const goalsHome=fixture.goals.home;
+      const goalsAway=fixture.goals.away;
+      if(goalsHome===null||goalsAway===null)return;
+      const jogo=JOGOS.find(j=>
+        (j.pa===homeNome&&j.pb===awayNome)||(j.pa===awayNome&&j.pb===homeNome)
+      );
+      if(!jogo)return;
+      const resAtual=resultadosAtuais[jogo.n];
+      let gaFinal=goalsHome,gbFinal=goalsAway;
+      if(jogo.pa===awayNome){gaFinal=goalsAway;gbFinal=goalsHome;}
+      if(!resAtual||resAtual.ga!==gaFinal||resAtual.gb!==gbFinal){
+        resultadosAtuais[jogo.n]={ga:gaFinal,gb:gbFinal};
+        atualizados++;
+      }
+    });
+    if(atualizados>0){
+      await salvar('resultados',resultadosAtuais);
+      await carregarGestor();
+      await renderRes(resultadosAtuais);
+      if(status)status.textContent=atualizados+' resultado(s) atualizado(s)! ✅';
+    }else{if(status)status.textContent='Resultados já estão atualizados ✅';}
+    const agora=new Date().toLocaleTimeString('pt-BR');
+    const ultima=document.getElementById('ultima-busca');
+    if(ultima)ultima.textContent='Última busca: '+agora;
+  }catch(e){
+    console.error('Erro API:',e);
+    if(status)status.textContent='Erro ao buscar. Verifique a conexão.';
+  }
+  if(btn)btn.disabled=false;
+}
+
+function toggleAutoFetch(ativo){
+  const status=document.getElementById('auto-status');
+  if(ativo){
+    buscarResultadosAPI();
+    autoFetchInterval=setInterval(buscarResultadosAPI,5*60*1000);
+    if(status)status.textContent='Atualizando a cada 5 minutos...';
+  }else{
+    if(autoFetchInterval)clearInterval(autoFetchInterval);
+    autoFetchInterval=null;
+    if(status)status.textContent='Atualização automática desativada';
+  }
+}
+
+function fecharModal(){document.getElementById('modal-wpp').classList.remove('aberto');}
+function fecharModalPalpites(){document.getElementById('modal-palpites').classList.remove('aberto');}
+document.getElementById('modal-palpites').addEventListener('click',function(e){if(e.target===this)fecharModalPalpites();});
+
+async function verPalpitesParticipante(cod,nome){
+  document.getElementById('modal-pal-titulo').textContent='👁 Palpites de '+nome;
+  document.getElementById('modal-pal-sub').textContent='Código: '+cod;
+  document.getElementById('modal-pal-loading').classList.remove('hidden');
+  document.getElementById('modal-pal-conteudo').classList.add('hidden');
+  document.getElementById('modal-palpites').classList.add('aberto');
+  const palpites=await ler('pal_'+cod)||{};
+  const res=await ler('resultados')||{};
+  document.getElementById('modal-pal-loading').classList.add('hidden');
+  document.getElementById('modal-pal-conteudo').classList.remove('hidden');
+  const qtd=Object.values(palpites).filter(function(p){return p&&p.ga!=null;}).length;
+  document.getElementById('modal-pal-sub').textContent='Código: '+cod+' — '+qtd+'/104 palpites preenchidos';
+  const fasesCls={'Grupos':'grupos','Rodada_32':'r32','Oitavas':'oitavas','Quartas':'quartas','Semi':'semi','Disputa_Terceiro':'terceiro','Final':'final'};
+  const fasesLabel={'Grupos':'Fase de Grupos','Rodada_32':'Rodada de 32','Oitavas':'Oitavas de Final','Quartas':'Quartas de Final','Semi':'Semifinais','Disputa_Terceiro':'Disputa 3º Lugar','Final':'Final'};
+  let out='';let faseAtual='';
+  JOGOS.forEach(function(j){
+    if(j.f!==faseAtual){
+      faseAtual=j.f;
+      const cls=fasesCls[j.f]||'grupos';
+      const lbl=fasesLabel[j.f]||j.f;
+      out+='<div class="fase-hdr f-'+cls+'" style="margin:12px 0 8px;font-size:13px">'+lbl+'</div>';
+    }
+    const p=palpites[j.n];const r=res[j.n];
+    const preench=p&&p.ga!=null&&p.gb!=null;
+    const temResult=r&&r.ga!=null&&r.gb!=null;
+    let acerto='';
+    if(preench&&temResult){
+      const resR=+r.ga>+r.gb?1:+r.gb>+r.ga?-1:0;
+      const resP=+p.ga>+p.gb?1:+p.gb>+p.ga?-1:0;
+      const placarExato=+p.ga===+r.ga&&+p.gb===+r.gb;
+      const pts=PTS[j.f]||PTS.Grupos;
+      if(placarExato)acerto='<span style="background:#C8E6C9;color:#1B5E20;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700">✓ Placar Exato +'+pts.exato+'pts</span>';
+      else if(resR===resP)acerto='<span style="background:#BBDEFB;color:#0D47A1;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700">✓ Resultado +'+pts.resultado+'pt</span>';
+      else acerto='<span style="background:#FFCDD2;color:#B71C1C;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700">✗ Errou</span>';
+    }
+    const palpiteStr=preench?'<strong>'+p.ga+' × '+p.gb+'</strong>':'<span style="color:#BDBDBD">—</span>';
+    const resultStr=temResult?'('+r.ga+' × '+r.gb+')':'';
+    const bg=preench?'white':'#FAFAFA';const bdr=preench?'#E0E0E0':'#F5F5F5';
+    out+='<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;margin-bottom:4px;background:'+bg+';border:1px solid '+bdr+'">';
+    out+='<span style="font-size:11px;color:#9E9E9E;min-width:48px">Jogo #'+j.n+'</span>';
+    out+='<span style="flex:1;font-size:13px">'+j.pa+' × '+j.pb+'</span>';
+    out+='<span style="font-size:14px">'+palpiteStr+'</span>';
+    out+='<span style="font-size:12px;color:#9E9E9E">'+resultStr+'</span>';
+    out+=acerto;out+='</div>';
+  });
+  document.getElementById('modal-pal-conteudo').innerHTML=out;
+}
+document.getElementById('modal-wpp').addEventListener('click',function(e){if(e.target===this)fecharModal();});
+
+// ── RESET ─────────────────────────────────────────────────────────────────────
+async function resetarPalpites(){
+  if(!confirm('Apagar TODOS os palpites de todos os participantes?\n\nParticipantes e resultados serão mantidos.'))return;
+  const parts=await ler('participantes')||{};
+  for(const cod of Object.keys(parts)){await salvar('pal_'+cod,{});}
+  mostrarMsgReset();await carregarAdmin();await carregarGestor();
+}
+async function resetarResultados(){
+  if(!confirm('Apagar TODOS os resultados oficiais cadastrados?\n\nParticipantes e palpites serão mantidos.'))return;
+  await salvar('resultados',{});
+  mostrarMsgReset();await carregarAdmin();await carregarGestor();
+}
+async function resetarTudo(){
+  if(!confirm('⚠️ ATENÇÃO!\n\nEssa ação vai apagar ABSOLUTAMENTE TUDO:\n• Todos os participantes\n• Todos os palpites\n• Todos os resultados\n• Todo o histórico\n\nTem certeza que quer continuar?'))return;
+  if(!confirm('Segunda confirmação:\n\nCONFIRMA o reset completo de todos os dados?'))return;
+  const parts=await ler('participantes')||{};
+  for(const cod of Object.keys(parts)){await salvar('pal_'+cod,{});}
+  await salvar('participantes',{});await salvar('resultados',{});await salvar('historico',[]);
+  mostrarMsgReset();await carregarAdmin();await carregarGestor();
+}
+function mostrarMsgReset(){
+  const el=document.getElementById('adm-msg-reset');
+  el.classList.remove('hidden');setTimeout(()=>el.classList.add('hidden'),4000);
+}
+
+// ── ADMIN ─────────────────────────────────────────────────────────────────────
+async function carregarAdmin(){
+  const parts=await ler('participantes')||{};
+  const hist=await ler('historico')||[];
+  const total=Object.keys(parts).length;
+  let comPal=0;
+  for(const cod of Object.keys(parts)){const p=await ler('pal_'+cod);if(p&&Object.keys(p).length>0)comPal++;}
+  document.getElementById('adm-total-part').textContent=total;
+  document.getElementById('adm-total-pal').textContent=comPal;
+  const el=document.getElementById('adm-historico');
+  if(!hist.length){el.innerHTML='<div class="txt-cinza txt-c" style="padding:24px">Nenhum código gerado ainda.</div>';return;}
+  let h=`<table class="tabela"><thead><tr>
+    <th>Nome</th><th>Código</th><th>Criado em</th><th>Envios</th><th>Reenviar</th><th>Excluir</th>
+  </tr></thead><tbody>`;
+  hist.slice().reverse().forEach(item=>{
+    const data=new Date(item.criado).toLocaleString('pt-BR');
+    const envios=item.envios?item.envios.length:0;
+    const ativo=parts[item.cod]?'✅':'❌ Removido';
+    h+=`<tr style="${!parts[item.cod]?'opacity:.5':''}">
+      <td style="font-weight:700">${item.nome}</td>
+      <td><code style="background:#F5F5F5;padding:3px 8px;border-radius:6px;font-weight:700">${item.cod}</code></td>
+      <td style="font-size:12px;color:#757575">${data}</td>
+      <td style="text-align:center">${envios}x ${ativo}</td>
+      <td>${parts[item.cod]?`<button class="btn btn-verde btn-sm" onclick="mostrarWpp('${item.nome}','${item.cod}')">📱 Reenviar</button>`:'—'}</td>
+      <td>${parts[item.cod]?`<button class="btn btn-vermelho btn-sm" onclick="remover('${item.cod}','${item.nome}')">🗑</button>`:'—'}</td>
+    </tr>`;
+  });
+  h+='</tbody></table>';el.innerHTML=h;
+}
+async function alterarSenhaGestor(){
+  alert('Para alterar senhas, acesse o Firebase Console → Authentication → Usuários.');
+}
+async function alterarSenhaAdmin(){
+  alert('Para alterar senhas, acesse o Firebase Console → Authentication → Usuários.');
+}
+</script>
+</body>
+</html>
