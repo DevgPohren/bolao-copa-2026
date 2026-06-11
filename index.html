@@ -914,6 +914,14 @@ async function renderPalpites(){
     'Final':     'Aguarde: gestor precisa cadastrar os 2 resultados das Semifinais ('+r2+'/2)',
   };
 
+  let agora;
+  try {
+    const tr = await fetch('https://worldtimeapi.org/api/timezone/America/Sao_Paulo');
+    const td = await tr.json();
+    agora = new Date(td.datetime);
+  } catch(e) {
+    agora = new Date();
+  }
   c.innerHTML='';
   FASES.forEach(fase=>{
     const jogos=JOGOS.filter(j=>j.f===fase.id);
@@ -940,7 +948,6 @@ async function renderPalpites(){
       const nomeA = nomes[j.n]?.pa || j.pa;
       const nomeB = nomes[j.n]?.pb || j.pb;
       // Check if game is locked by time
-      const agora = new Date();
       let jogoLocked = false;
       let dataLabel = '';
       if(j.data){
