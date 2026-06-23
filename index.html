@@ -483,7 +483,7 @@ async function salvarPalpitesAuth(codigo, valor){
 
 // Senhas gerenciadas pelo Firebase Authentication - não ficam no código
 const GESTOR_UID_REF = 's2lN8cyAX8Wy9WP9s8D13SSfXXy2';
-const ADMIN_UID_REF  = 'q6dc5LMJHReFJGFn172SH4Wplx63';
+const ADMIN_UID_REF  = '6RAqQytM6YNd7r8Vh0IZQ8OgYeG3';
 let nivelAcesso=null;
 
 // Restaurar sessão ao recarregar página
@@ -1097,7 +1097,7 @@ async function entrarGestor(){
     const cred = await auth.signInWithEmailAndPassword(email, senha);
     const uid = cred.user.uid;
     document.getElementById('load-gestor').classList.add('hidden');
-    if(uid === 'q6dc5LMJHReFJGFn172SH4Wplx63'){
+    if(uid === '6RAqQytM6YNd7r8Vh0IZQ8OgYeG3'){
       nivelAcesso = 'admin';
     } else if(uid === 's2lN8cyAX8Wy9WP9s8D13SSfXXy2'){
       nivelAcesso = 'gestor';
